@@ -1,1 +1,43 @@
 <% include templates/nav %>
+<div class="row">
+  <form class="col s12"method="post" action="/send_email">
+    <div class="row">
+      <div class="input-field col s6">
+        <i class="material-icons prefix">mode_edit</i>
+        <textarea id="icon_prefix2" class="materialize-textarea"></textarea>
+        <label for="icon_prefix2">Message</label>
+      </div>
+    </div>
+    <input class="btn" type="submit" value="Submit" id="submit">
+  </form>
+</div>
+
+<script>
+  $(document).ready(function(){
+    var message;
+    $("#submit").click(function(){
+      message = $("#icon_prefix2").val();
+      /*
+      $.post("http://localhost:3000/send_email",{message: message}, function(data){
+        if(data ==='done')
+          {
+            alert("Send Successful");
+          }
+      });
+      */
+      $.ajax({
+          type: "POST",
+          url: "/send_email",
+          data: {info: message},
+          success: function(data){
+              console.log("The ajax request succeeded!");
+              console.log("The result is: ");
+              console.dir(data);
+          },
+          error: function(){
+              console.log("The request failed");
+          }
+      });
+    });
+  });
+</script>

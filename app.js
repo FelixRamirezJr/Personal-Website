@@ -28,7 +28,7 @@ app.set('view engine', 'ejs');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 // For the use of sass
 app.use(
@@ -47,13 +47,28 @@ app.use('/about',about);
 app.use('/vu',vu);
 app.use('/contact',contact);
 
+app.post('/send_email',function(req,res){
+  var sendgrid = require('sendgrid')("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");
+  console.log(req.body.info);
+  var the_val = req.body.info;
+  sendgrid.send({
+    to:       'felix.ramirezjr@gmail.com',
+    from:     'contact@mywebsite.com',
+    subject:  'Contacted',
+    text:     the_val
+  }, function(err, json) {
+    if (err) { return res.send("Not Good"); }
+    res.render('contact');
+  });
+
+});
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
-
 // error handlers
 
 // development error handler
@@ -77,6 +92,8 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
+
+
 
 
 module.exports = app;
