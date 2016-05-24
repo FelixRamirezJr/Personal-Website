@@ -1,15 +1,18 @@
+/* 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 */
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var sassMiddleware = require('node-sass-middleware');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var me = require('./routes/me');
 var about = require('./routes/about');
 var vu = require('./routes/vu');
+var contact = require('./routes/contact');
 
 // Adding React To The appvar React = require('react');
 var React = require('react');
@@ -27,6 +30,14 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+// For the use of sass
+app.use(
+  sassMiddleware({
+    src: __dirname + '/sass',
+    dest: __dirname + '/src/css',
+    debug: true,
+  })
+);
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
@@ -34,6 +45,7 @@ app.use('/users', users);
 app.use('/me',me);
 app.use('/about',about);
 app.use('/vu',vu);
+app.use('/contact',contact);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
