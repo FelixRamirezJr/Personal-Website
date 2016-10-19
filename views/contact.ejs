@@ -41,7 +41,7 @@
 
 
 <script>
-  $(document).ready(function(){
+  $(document).ready(function(e){
     var message,email,name;
     $("#submit").click(function(){
       message = $("#icon_prefix2").val();
@@ -64,6 +64,8 @@
               console.log("The request failed");
           }
       });
+      e.preventDefault();
+      return false;
     });
   });
 </script>
