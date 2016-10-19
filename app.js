@@ -101,7 +101,7 @@ app.post('/send_email',function(req,res){
 });
 
 app.get('/code',function(req,res){
-  var code = req.query.code;
+  var code = req.query.info;
   var Cont = mongoose.model('Contacts', ContactSchema);
   Cont.findOne({ 'receipt': code }, 'name email status', function (err, result) {
     if (err) return handleError(err);
