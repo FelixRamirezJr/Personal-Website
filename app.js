@@ -1,9 +1,4 @@
-/* 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 */
-var express = require('express'),
-    app = express(),
-    server = require('http').createServer(app),
-    io = require('socket.io').listen(server);
-    server.listen(process.env.PORT || 3000);
+var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -41,6 +36,7 @@ var vu = require('./routes/vu');
 var contact = require('./routes/contact');
 var status_update = require('./routes/status_update');
 var code = require('./routes/code');
+var chat = require('./routes/chat');
 /* ************************************ */
 
 // Adding React To The appvar React = require('react');
@@ -77,6 +73,7 @@ app.use('/vu',vu);
 app.use('/contact',contact);
 app.use('/status_update',status_update);
 app.use('/code',code);
+app.use('/chat',chat);
 
 // Sends email and creates receipt number
 app.post('/send_email',function(req,res){
@@ -108,17 +105,6 @@ app.post('/send_email',function(req,res){
     if (err) { return res.send("Not Good"); }
     res.render('contact_complete',{ key: rec });
   });
-});
-
-// For Chat Page
-app.get('/chat',function(req,res){
-  io.sockets.on('connection', function(socket) {
-      socket.emit('message', { message: 'Welcome to my chat...' });
-      socket.on('send', function(data) {
-          io.sockets.emit("message",data);
-      });
-  });
-  res.render('chat');
 });
 
 // catch 404 and forward to error handler
