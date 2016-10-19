@@ -6,20 +6,25 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var sassMiddleware = require('node-sass-middleware');
-var mongo = require('mongodb');
-
+var mongoose = require ("mongoose"); // The reason for this demo.
 // Connecting To Server
 var mongoUri = process.env.MONGODB_URI;
-var MongoClient = mongo.MongoClient;
-
-MongoClient.connect(mongoUri, function (err, db) {
-  if (err) {
-    console.log('Unable to connect to the mongoDB server. Error:', err);
-  } else {
-    console.log('Connection established to', mongoUri);
-    db.close();
-  }
+mongoose.connect(mongoUri, function (err, res) {
+      if (err) {
+      console.log ('ERROR connecting to: ' + mongoUri + '. ' + err);
+      } else {
+      console.log ('Succeeded connected to: ' + mongoUri);
+      }
 });
+
+/* *********** MODELS *************/
+var ContactSchema = new mongoose.Schema({
+      name: String,
+      message: String,
+      email: String,
+      receipt: String
+});
+/************ END ****************/
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -72,15 +77,15 @@ app.post('/send_email',function(req,res){
   var randomNum = Math.floor(Math.random() * 10000) + 1;
   var rec = full_name.charAt(0) + contact_email.charAt(0) + randomNum.toString();
   console.log("Before mongo db send");
-  MongoClient.connect(mongoUri, function (err, db) {
-    if (err) {
-      console.log('Unable to connect to the mongoDB server. Error:', err);
-    } else {
-      db.insert({email:contact_email, name:full_name, receipt:rec, status:"Pending"});
-      console.log("Insert successful");
-      db.close();
-    }
-  });
+  var cont = mongoose.model('Contacts', ContactSchema);
+     var submittedContact = new cont ({
+       name: full_name,
+       email: contact_email,
+       message: message,
+       receipt: rec
+     });
+     // Saving it to the database.
+ submittedContact.save(function (err) {if (err) console.log ('Error on save!')});
   console.log("Sending email");
   var the_val = message + " From: " + full_name + " Email: " + contact_email;
   sendgrid.send({
