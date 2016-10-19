@@ -103,7 +103,7 @@ app.post('/send_email',function(req,res){
 app.get('/code',function(req,res){
   var code = req.query;
   var Cont = mongoose.model('Contacts', ContactSchema);
-  res.send(req.query);
+  res.send(req.query.info);
 
 });
 
