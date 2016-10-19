@@ -84,7 +84,7 @@ app.post('/send_email',function(req,res){
      });
      // Saving it to the database.
   submittedContact.save(function (err) {if (err) console.log ('Error on save!')});
-  var the_val = message + " From: " + full_name + " Email: " + contact_email;
+  var the_val = message + " From: " + full_name + " Email: " + contact_email + " Receipt Code: " + rec;
   sendgrid.send({
     to:       'felix.ramirezjr@gmail.com',
     from:     'contact@mywebsite.com',
