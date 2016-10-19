@@ -61,14 +61,32 @@ app.use('/about',about);
 app.use('/vu',vu);
 app.use('/contact',contact);
 
+// Sends email and creates receipt number
 app.post('/send_email',function(req,res){
+  // Send Email
   var sendgrid = require('sendgrid')("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");
   console.log(req.body.info);
-  var the_val = req.body.info;
+  var full_name = req.body.name;
+  var contact_email = req.body.email;
+  var message = req.body.info;
+  var randomNum = Math.floor(Math.random() * 10000) + 1;
+  var rec = full_name.charAt(0) + contact_email.charAt(0) + randomNum.toString();
+  console.log("Before mongo db send");
+  MongoClient.connect(mongoUri, function (err, db) {
+    if (err) {
+      console.log('Unable to connect to the mongoDB server. Error:', err);
+    } else {
+      db.insert({email:contact_email, name:full_name, receipt:rec, status:"Pending"});
+      console.log("Insert successful");
+      db.close();
+    }
+  });
+  console.log("Sending email");
+  var the_val = message + " From: " + full_name + " Email: " + contact_email;
   sendgrid.send({
     to:       'felix.ramirezjr@gmail.com',
     from:     'contact@mywebsite.com',
-    subject:  'Contacted',
+    subject:  full_name + " has contacted you",
     text:     the_val
   }, function(err, json) {
     if (err) { return res.send("Not Good"); }
