@@ -9,6 +9,7 @@ var sassMiddleware = require('node-sass-middleware');
 var mongoose = require ("mongoose"); // The reason for this demo.
 // Connecting To Server
 var mongoUri = process.env.MONGODB_URI;
+mongoose.Promise = global.Promise;
 mongoose.connect(mongoUri, function (err, res) {
       if (err) {
       console.log ('ERROR connecting to: ' + mongoUri + '. ' + err);
@@ -68,15 +69,12 @@ app.use('/contact',contact);
 
 // Sends email and creates receipt number
 app.post('/send_email',function(req,res){
-  console.log("In sending email");
   var sendgrid = require('sendgrid')("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");
-  console.log(req.body.info);
   var full_name = req.body.name;
   var contact_email = req.body.email;
   var message = req.body.info;
   var randomNum = Math.floor(Math.random() * 10000) + 1;
   var rec = full_name.charAt(0) + contact_email.charAt(0) + randomNum.toString();
-  console.log("Before mongo db send");
   var cont = mongoose.model('Contacts', ContactSchema);
      var submittedContact = new cont ({
        name: full_name,
@@ -85,8 +83,7 @@ app.post('/send_email',function(req,res){
        receipt: rec
      });
      // Saving it to the database.
- submittedContact.save(function (err) {if (err) console.log ('Error on save!')});
-  console.log("Sending email");
+  submittedContact.save(function (err) {if (err) console.log ('Error on save!')});
   var the_val = message + " From: " + full_name + " Email: " + contact_email;
   sendgrid.send({
     to:       'felix.ramirezjr@gmail.com',
@@ -95,7 +92,7 @@ app.post('/send_email',function(req,res){
     text:     the_val
   }, function(err, json) {
     if (err) { return res.send("Not Good"); }
-    res.render('contact');
+    res.render('contact_complete',{ key: randomNum });
   });
 
 });
