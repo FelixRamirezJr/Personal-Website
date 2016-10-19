@@ -2,6 +2,11 @@ var express = require('express'),
     app = express(),
     server = require('http').createServer(app),
     io = require('socket.io').listen(server);
+    io.configure(function () {
+      io.set("transports", ["xhr-polling"]);
+      io.set("polling duration", 10);
+    });
+    
     server.listen(process.env.PORT || 3000);
 
 var router = express.Router();
