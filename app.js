@@ -1,5 +1,5 @@
 var express = require('express');
-var app = express.createServer()
+var app = express.createServer();
 var io = require('socket.io').listen(app);
 var port = process.env.PORT || 3000;
 app.listen(port);
