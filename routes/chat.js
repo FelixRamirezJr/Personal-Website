@@ -1,10 +1,10 @@
-var express = require('express');
-var router = express.Router();
-const server = express()
-  .use((req, res) => res.sendFile(INDEX) )
-  .listen(PORT, () => console.log(`Listening on ${ PORT }`));
+var express = require('express'),
+    app = express(),
+    server = require('http').createServer(app),
+    io = require('socket.io').listen(server),
+    server.listen(process.env.PORT || 3000);
 
-  var io = require('socket.io').listen(server);
+var router = express.Router();
 
 /* GET me page. */
 router.get('/', function(req, res, next) {
