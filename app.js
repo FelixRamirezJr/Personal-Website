@@ -10,7 +10,7 @@ var mongo = require('mongodb');
 
 // Connecting To Server
 var mongoUri = process.env.MONGOLAB_URI;
-var MongoClient = mongodb.MongoClient;
+var MongoClient = mongo.MongoClient;
 
 MongoClient.connect(mongoUri, function (err, db) {
   if (err) {
@@ -20,7 +20,6 @@ MongoClient.connect(mongoUri, function (err, db) {
     console.log('Connection established to', url);
 
     // do some work here with the database.
-
     //Close connection
     db.close();
   }
