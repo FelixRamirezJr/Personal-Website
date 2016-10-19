@@ -56,9 +56,7 @@
           data: {info: message, email: email, name: name},
           success: function(data)
           {
-              console.log("The ajax request succeeded!");
-              console.log("The result is: ");
-              console.dir(data);
+            $("head").append(data);
           },
           error: function(){
               console.log("The request failed");
