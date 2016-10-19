@@ -6,6 +6,25 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var sassMiddleware = require('node-sass-middleware');
+var mongo = require('mongodb');
+
+// Connecting To Server
+var mongoUri = process.env.MONGOLAB_URI;
+var MongoClient = mongodb.MongoClient;
+
+MongoClient.connect(mongoUri, function (err, db) {
+  if (err) {
+    console.log('Unable to connect to the mongoDB server. Error:', err);
+  } else {
+    //HURRAY!! We are connected. :)
+    console.log('Connection established to', url);
+
+    // do some work here with the database.
+
+    //Close connection
+    db.close();
+  }
+});
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
