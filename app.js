@@ -26,8 +26,9 @@ var ContactSchema = new mongoose.Schema({
       receipt: String,
       status: String
 });
-/************ END ****************/
+/**********************************/
 
+/************* ROUTES ***************/
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var me = require('./routes/me');
@@ -36,6 +37,8 @@ var vu = require('./routes/vu');
 var contact = require('./routes/contact');
 var status_update = require('./routes/status_update');
 var code = require('./routes/code');
+var chat = require('./routes/chat');
+/* ************************************ */
 
 // Adding React To The appvar React = require('react');
 var React = require('react');
@@ -71,6 +74,7 @@ app.use('/vu',vu);
 app.use('/contact',contact);
 app.use('/status_update',status_update);
 app.use('/code',code);
+app.use('/chat',chat);
 
 // Sends email and creates receipt number
 app.post('/send_email',function(req,res){
