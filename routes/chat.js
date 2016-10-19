@@ -1,3 +1,4 @@
+/*
 var express = require('express');
 var app = express.createServer()
 var io = require('socket.io').listen(app);
@@ -11,7 +12,6 @@ io.configure(function () {
 });
 var router = express.Router();
 
-/* GET me page. */
 router.get('/', function(req, res, next) {
   io.sockets.on('connection', function(socket) {
       socket.emit('message', { message: 'Welcome to my chat...' });
@@ -23,3 +23,4 @@ router.get('/', function(req, res, next) {
 });
 
 module.exports = router;
+*/

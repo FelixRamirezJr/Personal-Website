@@ -1,4 +1,15 @@
 var express = require('express');
+var app = express.createServer()
+var io = require('socket.io').listen(app);
+var port = process.env.PORT || 3000;
+app.listen(port);
+
+    // Required for Heroku Cloud Server
+io.configure(function () {
+  io.set("transports", ["xhr-polling"]);
+  io.set("polling duration", 10);
+});
+
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -36,7 +47,6 @@ var vu = require('./routes/vu');
 var contact = require('./routes/contact');
 var status_update = require('./routes/status_update');
 var code = require('./routes/code');
-var chat = require('./routes/chat');
 /* ************************************ */
 
 // Adding React To The appvar React = require('react');
@@ -73,7 +83,6 @@ app.use('/vu',vu);
 app.use('/contact',contact);
 app.use('/status_update',status_update);
 app.use('/code',code);
-app.use('/chat',chat);
 
 // Sends email and creates receipt number
 app.post('/send_email',function(req,res){
@@ -105,6 +114,16 @@ app.post('/send_email',function(req,res){
     if (err) { return res.send("Not Good"); }
     res.render('contact_complete',{ key: rec });
   });
+});
+
+app.get('/chat',function(req,res)){
+  io.sockets.on('connection', function(socket) {
+      socket.emit('message', { message: 'Welcome to my chat...' });
+      socket.on('send', function(data) {
+          io.sockets.emit("message",data);
+      });
+  });
+  res.render('chat');
 });
 
 // catch 404 and forward to error handler
