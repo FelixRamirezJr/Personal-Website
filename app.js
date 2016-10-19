@@ -9,7 +9,7 @@ var sassMiddleware = require('node-sass-middleware');
 var mongo = require('mongodb');
 
 // Connecting To Server
-var mongoUri = process.env.MONGOLAB_URI;
+var mongoUri = process.env.MONGODB_URI;
 var MongoClient = mongo.MongoClient;
 
 MongoClient.connect(mongoUri, function (err, db) {
