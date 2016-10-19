@@ -6,8 +6,8 @@
       <form method="post" action="/send_email">
         <div class="card-content white-text">
           <div class="full center" style="width: 100%;">
-            <span class="card-title">Please fill out the form below.</span>
-            <p> Please provide your information and reason of contacting. </p>
+            <span class="card-title">Contact</span>
+            <p class="center"> Please provide your information and reason of contacting. </p>
           </div>
           <div class="row">
             <div class="input-field col s6">
@@ -42,22 +42,17 @@
 
 <script>
   $(document).ready(function(){
-    var message;
+    var message,email,name;
     $("#submit").click(function(){
       message = $("#icon_prefix2").val();
-      /*
-      $.post("http://localhost:3000/send_email",{message: message}, function(data){
-        if(data ==='done')
-          {
-            alert("Send Successful");
-          }
-      });
-      */
+      email = $("#email").val();
+      name = $("#name").val();
       $.ajax({
           type: "POST",
           url: "/send_email",
-          data: {info: message},
-          success: function(data){
+          data: {info: message, email: email, name: name},
+          success: function(data)
+          {
               console.log("The ajax request succeeded!");
               console.log("The result is: ");
               console.dir(data);
