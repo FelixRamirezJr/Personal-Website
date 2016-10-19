@@ -1,14 +1,14 @@
-var express = require('express'),
-    app = express(),
-    server = require('http').createServer(app),
-    io = require('socket.io').listen(server);
-    io.configure(function () {
-      io.set("transports", ["xhr-polling"]);
-      io.set("polling duration", 10);
-    });
-    
-    server.listen(process.env.PORT || 3000);
+var express = require('express');
+var app = require('express').createServer()
+var io = require('socket.io').listen(app);
+var port = process.env.PORT || 3000;
+app.listen(port);
 
+    // Required for Heroku Cloud Server
+io.configure(function () {
+  io.set("transports", ["xhr-polling"]);
+  io.set("polling duration", 10);
+});
 var router = express.Router();
 
 /* GET me page. */
