@@ -9,7 +9,6 @@ router.get('/', function(req, res, next) {
           io.sockets.emit("message_to_client",{ message: data["message"] });
       });
   });
-
   res.render('chat');
 });
 

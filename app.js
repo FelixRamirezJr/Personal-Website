@@ -35,6 +35,7 @@ var about = require('./routes/about');
 var vu = require('./routes/vu');
 var contact = require('./routes/contact');
 var status_update = require('./routes/status_update');
+var code = require('./routes/code');
 
 // Adding React To The appvar React = require('react');
 var React = require('react');
@@ -69,6 +70,7 @@ app.use('/about',about);
 app.use('/vu',vu);
 app.use('/contact',contact);
 app.use('/status_update',status_update);
+app.use('/code',code);
 
 // Sends email and creates receipt number
 app.post('/send_email',function(req,res){
@@ -99,15 +101,6 @@ app.post('/send_email',function(req,res){
   }, function(err, json) {
     if (err) { return res.send("Not Good"); }
     res.render('contact_complete',{ key: rec });
-  });
-});
-
-app.get('/code',function(req,res){
-  var code = req.query.info.toString();
-  var Cont = mongoose.model('Contacts', ContactSchema);
-  Cont.findOne({ 'receipt': code }, 'name email status', function (err, result) {
-    if (err) return handleError(err);
-    res.render('code',{name: result.name, email: result.email, status: result.status });
   });
 });
 
