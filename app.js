@@ -1,8 +1,8 @@
-var express = require('express');
-var app = express.createServer();
-var io = require('socket.io').listen(app);
-var port = process.env.PORT || 3000;
-app.listen(port);
+var express = require('express'),
+    app = express(),
+    server = require('http').createServer(app),
+    io = require('socket.io').listen(server),
+    server.listen(process.env.PORT || 3000);
 
     // Required for Heroku Cloud Server
 io.configure(function () {
@@ -155,8 +155,5 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-
-
-
 
 module.exports = app;
