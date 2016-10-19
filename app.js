@@ -63,7 +63,7 @@ app.use('/contact',contact);
 
 // Sends email and creates receipt number
 app.post('/send_email',function(req,res){
-  // Send Email
+  console.log("In sending email");
   var sendgrid = require('sendgrid')("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");
   console.log(req.body.info);
   var full_name = req.body.name;
