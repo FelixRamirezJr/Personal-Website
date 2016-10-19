@@ -17,7 +17,7 @@ MongoClient.connect(mongoUri, function (err, db) {
     console.log('Unable to connect to the mongoDB server. Error:', err);
   } else {
     //HURRAY!! We are connected. :)
-    console.log('Connection established to', url);
+    console.log('Connection established to', mongoUri);
 
     // do some work here with the database.
     //Close connection
