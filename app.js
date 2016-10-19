@@ -23,7 +23,8 @@ var ContactSchema = new mongoose.Schema({
       name: String,
       message: String,
       email: String,
-      receipt: String
+      receipt: String,
+      status: String
 });
 /************ END ****************/
 
@@ -75,15 +76,18 @@ app.post('/send_email',function(req,res){
   var message = req.body.info;
   var randomNum = Math.floor(Math.random() * 10000) + 1;
   var rec = full_name.charAt(0) + contact_email.charAt(0) + randomNum.toString();
+  // Insert into database
   var cont = mongoose.model('Contacts', ContactSchema);
-     var submittedContact = new cont ({
-       name: full_name,
-       email: contact_email,
-       message: message,
-       receipt: rec
-     });
-     // Saving it to the database.
+  var submittedContact = new cont ({
+    name: full_name,
+    email: contact_email,
+    message: message,
+    receipt: rec,
+    status: "Pending"
+  });
+  // Saving it to the database.
   submittedContact.save(function (err) {if (err) console.log ('Error on save!')});
+  // Sending Email
   var the_val = message + " From: " + full_name + " Email: " + contact_email + " Receipt Code: " + rec;
   sendgrid.send({
     to:       'felix.ramirezjr@gmail.com',
@@ -93,6 +97,15 @@ app.post('/send_email',function(req,res){
   }, function(err, json) {
     if (err) { return res.send("Not Good"); }
     res.render('contact_complete',{ key: rec });
+  });
+});
+
+app.get('/code',function(req,res){
+  var code = req.body.code;
+  var Cont = mongoose.model('Contacts', ContactSchema);
+  Cont.findOne({ 'receipt': "WN5625" }, 'name email status', function (err, result) {
+    if (err) return handleError(err);
+    res.render('code',{name: result.name, email: result.email, status: result.status });
   });
 
 });
