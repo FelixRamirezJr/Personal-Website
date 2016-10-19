@@ -103,12 +103,14 @@ app.post('/send_email',function(req,res){
 app.get('/code',function(req,res){
   var code = req.query.info.toString();
   var Cont = mongoose.model('Contacts', ContactSchema);
-
   Cont.findOne({ 'receipt': code }, 'name email status', function (err, result) {
     if (err) return handleError(err);
     res.render('code',{name: result.name, email: result.email, status: result.status });
   });
+});
 
+app.get('/status_update',function(){
+  res.render('status_update');
 });
 
 // catch 404 and forward to error handler
