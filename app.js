@@ -92,7 +92,7 @@ app.post('/send_email',function(req,res){
     text:     the_val
   }, function(err, json) {
     if (err) { return res.send("Not Good"); }
-    res.render('contact_complete',{ key: randomNum });
+    res.render('contact_complete',{ key: rec });
   });
 
 });
