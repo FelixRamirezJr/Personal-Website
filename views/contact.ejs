@@ -25,7 +25,7 @@
           <div class="row">
             <div class="input-field col s12">
               <i class="material-icons prefix">mode_edit</i>
-              <textarea id="icon_prefix2" class="materialize-textarea" required="required"></textarea>
+              <textarea id="message" class="materialize-textarea" required="required"></textarea>
               <label for="icon_prefix2">Detailed Description</label>
             </div>
           </div>
@@ -41,10 +41,10 @@
 
 
 <script>
-  $(document).ready(function(e){
+  $(document).ready(function(){
     var message,email,name;
-    $("#submit").click(function(){
-      message = $("#icon_prefix2").val();
+    $("#submit").click(function(event){
+      message = $("#message").val();
       email = $("#email").val();
       name = $("#name").val();
       console.log(message);
@@ -64,7 +64,7 @@
               console.log("The request failed");
           }
       });
-      e.preventDefault();
+      event.preventDefault();
       return false;
     });
   });
