@@ -34,6 +34,7 @@ var me = require('./routes/me');
 var about = require('./routes/about');
 var vu = require('./routes/vu');
 var contact = require('./routes/contact');
+var status_update = require('./routes/status_update');
 
 // Adding React To The appvar React = require('react');
 var React = require('react');
@@ -67,6 +68,7 @@ app.use('/me',me);
 app.use('/about',about);
 app.use('/vu',vu);
 app.use('/contact',contact);
+app.use('/status_update',status_update);
 
 // Sends email and creates receipt number
 app.post('/send_email',function(req,res){
@@ -107,10 +109,6 @@ app.get('/code',function(req,res){
     if (err) return handleError(err);
     res.render('code',{name: result.name, email: result.email, status: result.status });
   });
-});
-
-app.get('/status_update',function(){
-  res.render('status_update');
 });
 
 // catch 404 and forward to error handler
