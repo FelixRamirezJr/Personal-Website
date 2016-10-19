@@ -116,7 +116,7 @@ app.post('/send_email',function(req,res){
   });
 });
 
-app.get('/chat',function(req,res)){
+app.get('/chat',function(req,res){
   io.sockets.on('connection', function(socket) {
       socket.emit('message', { message: 'Welcome to my chat...' });
       socket.on('send', function(data) {
