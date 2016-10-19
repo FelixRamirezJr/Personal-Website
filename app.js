@@ -5,10 +5,10 @@ var express = require('express'),
     server.listen(process.env.PORT || 3000);
 
     // Required for Heroku Cloud Server
-io.configure(function () {
-  io.set("transports", ["xhr-polling"]);
-  io.set("polling duration", 10);
-});
+    io.on('connection', function () {
+      io.set("transports", ["xhr-polling"]);
+      io.set("polling duration", 10);
+    });
 
 var path = require('path');
 var favicon = require('serve-favicon');
