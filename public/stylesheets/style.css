@@ -7,5 +7,5 @@ nav{
 }
 
 .no-padding-top{
-  padding-top: 0rem;
+  padding-top: 0rem !important;
 }
