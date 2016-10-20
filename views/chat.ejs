@@ -10,6 +10,7 @@
 </div>
 
 <script>
+$(document).ready(function(){
     var messages = [];
     var socket = io(window.location.hostname);
     var field = document.getElementById("field");
@@ -33,4 +34,5 @@
         var text = field.value;
         socket.emit('send', { message: text });
     };
+});
 </script>
