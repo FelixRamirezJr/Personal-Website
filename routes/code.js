@@ -26,7 +26,8 @@ router.get('/', function(req, res, next) {
   var Cont = mongoose.model('Contacts', ContactSchema);
   Cont.findOne({ 'receipt': code }, 'name email status', function (err, result) {
     if (err){
-      res.render('status_update',{errors: "Invalid Code"})
+      res.render('status_update',{errors: "Invalid Code"});
+      return false;
     }
     res.render('code',{name: result.name, email: result.email, status: result.status });
   });
