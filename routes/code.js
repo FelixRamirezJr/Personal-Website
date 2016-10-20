@@ -12,6 +12,7 @@ mongoose.connect(mongoUri, function (err, res) {
       console.log ('Succeeded connected to: ' + mongoUri);
       }
 });
+
 var ContactSchema = new mongoose.Schema({
       name: String,
       message: String,
