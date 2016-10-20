@@ -25,7 +25,9 @@ router.get('/', function(req, res, next) {
   var code = req.query.info.toString();
   var Cont = mongoose.model('Contacts', ContactSchema);
   Cont.findOne({ 'receipt': code }, 'name email status', function (err, result) {
-    if (err) return handleError(err);
+    if (err){
+      res.render('status_update',{errors: "Invalid Code"})
+    }
     res.render('code',{name: result.name, email: result.email, status: result.status });
   });
 });
