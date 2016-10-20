@@ -115,7 +115,6 @@ app.post('/send_email',function(req,res){
 });
 
 app.get('/chat',function(req,res){
-  var host = location.origin;
   io.sockets.on('connection', function(socket) {
       socket.on('send', function(data) {
           io.sockets.emit("message",data);
