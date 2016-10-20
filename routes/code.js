@@ -32,8 +32,10 @@ router.get('/', function(req, res, next) {
     }
     if (err){
       res.render('status_update',{errors: "Invalid Code"});
+      return false;
     }
     res.render('code',{name: result.name, email: result.email, status: result.status });
+    return false;
   });
 });
 
