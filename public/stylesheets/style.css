@@ -5,3 +5,7 @@ nav{
 .flexible-image{
   max-width: 100%;
 }
+
+.no-padding-top{
+  padding-top: 0rem;
+}
