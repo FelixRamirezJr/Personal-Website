@@ -1,3 +1,7 @@
 nav{
   background-color: black;
 }
+
+.flexible-image{
+  max-width: 100%;
+}
