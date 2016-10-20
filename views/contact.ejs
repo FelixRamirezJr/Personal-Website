@@ -38,6 +38,7 @@
     </div>
   </div>
 </div>
+<% include templates/footer %>
 
 
 <script>
@@ -49,7 +50,7 @@
       name = $("#name").val();
       console.log(message);
       console.log(email);
-      console.log(name); 
+      console.log(name);
       $.ajax({
           type: "POST",
           url: "/send_email",
