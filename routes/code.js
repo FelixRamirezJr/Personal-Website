@@ -24,7 +24,7 @@ var ContactSchema = new mongoose.Schema({
 /* GET me page. */
 router.get('/', function(req, res, next) {
   var code = req.query.info.toString();
-  var Cont = mongoose.model('Contacts', ContactSchema);
+  var Cont = mongoose.model('contacts', ContactSchema);
   Cont.findOne({ 'receipt': code }, 'name email status', function (err, result) {
     if(!result){
       res.render('status_update',{errors: "Invalid Code"});
